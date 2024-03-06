@@ -20,8 +20,6 @@ pipeline {
 
         stage('Test') {
             steps {
-                // Intentional syntax error introduced below
-                thisIsNotAValidGroovyStatement
                 sh './hello'
             }
         }
