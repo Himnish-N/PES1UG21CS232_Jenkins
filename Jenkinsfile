@@ -1,24 +1,38 @@
-pipeline{
+pipeline {
     agent any
-    stages{
-        stage('Build'){
-            steps{
+
+    stages {
+        stage('Clone repository') {
+            steps {
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: '*/main']],
+                    userRemoteConfigs: [[url: 'https://github.com/Himnish-N/PES1UG21CS232_Jenkins.git']]
+                ])
+            }
+        }
+
+        stage('Build') {
+            steps {
                 sh 'g++ -o hello hello.cpp'
             }
         }
-        stage('Test'){
-            steps{
+
+        stage('Test') {
+            steps {
                 sh './hello'
             }
         }
-        stage('Deploy'){
-            steps{
+
+        stage('Deploy') {
+            steps {
                 echo "Deploying..."
             }
         }
     }
-    post{
-        failure{
+
+    post {
+        failure {
             echo "Pipeline Failed"
         }
     }
